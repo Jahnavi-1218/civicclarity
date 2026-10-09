@@ -2,6 +2,7 @@ import re
 import time
 import pandas as pd
 import streamlit as st
+from rag import retrieve, chunk_count
 
 from ui import inject_css, init_state, render_sidebar, hero, disclaimer
 from knowledge import TEST_CASES
@@ -83,3 +84,12 @@ if custom:
     text, kind = answer_query([], custom, st.session_state.language, st.session_state.level)
     st.markdown(text)
     st.caption(f"Handling: {kind}")
+    st.markdown("---")
+st.subheader("🔎 Retrieval inspector (RAG)")
+st.caption(f"The knowledge base is split into {chunk_count()} chunks. "
+           "Type a question to see which chunks are retrieved and their BM25 scores.")
+rag_query = st.text_input("Question to inspect", key="rag_query")
+if rag_query:
+    for h in retrieve(rag_query):
+        with st.expander(f"{h['score']}  |  {h['title']}  ({h['source']})"):
+            st.write(h["text"])
