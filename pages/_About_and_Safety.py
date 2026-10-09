@@ -27,6 +27,12 @@ st.markdown(
     '<div class="layer"><b>Layer 4: UI transparency.</b> A permanent disclaimer, a badge on every '
     'reply showing how it was handled, and an offline fallback so the demo never breaks.</div>',
     unsafe_allow_html=True)
+st.subheader("📚 Retrieval-Augmented Generation (RAG)")
+st.markdown(
+    "Instead of pasting all knowledge into every prompt, CivicClarity splits its knowledge base "
+    "into small chunks, ranks them against the citizen's question with **BM25**, and gives "
+    "Gemini only the top matches. This keeps answers grounded, reduces made-up details, and "
+    "lets the app show exactly which knowledge was used.")
 
 st.subheader("🚫 What this bot will NOT do")
 st.markdown("- Register or file complaints\n- Track or look up case status\n"
